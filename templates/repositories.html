@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for repo in repositories %}
+  <div>
+    <a href="{{repo.url}}">{{repo.name}}</a>
+  </div>
+{% endfor %}
+
+{% endblock %}

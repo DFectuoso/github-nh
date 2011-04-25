@@ -1,0 +1,7 @@
+cron:
+- description: Get the NH users 
+  url: /tasks/get_nh_users
+  schedule: every 1 hours
+- description: Get the github users information and fire some tasks 
+  url: /tasks/get_github_info
+  schedule: every 1 hours

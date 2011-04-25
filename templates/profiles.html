@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for profile in profiles %}
+  <div>
+    <a href="/repositories/{{profile.key.id}}">{{profile.github_user}}</a>
+  </div>
+{% endfor %}
+
+{% endblock %}
