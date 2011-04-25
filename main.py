@@ -78,23 +78,26 @@ class GetGithubInfoForUserHandler(webapp.RequestHandler):
   def post(self):
     profile = Profile.get_by_id(int(self.request.get("id")))
     gh = github.GitHub()
-    repos = gh.repos.forUser(profile.github_user)
-    for r in repos:
-      repo = Repository.get_or_put_by_url(r.url)
-      repo.profile = profile
-      repo.url = r.url
-      repo.name = r.name
-      repo.put()
+    try:
+      repos = gh.repos.forUser(profile.github_user)
+      for r in repos:
+        repo = Repository.get_or_put_by_url(r.url)
+        repo.profile = profile
+        repo.url = r.url
+        repo.name = r.name
+        repo.put()
 
-      #repo.description = r.description
-      #open_issues = db.BooleanProperty()
-      #has_issues  = db.BooleanProperty()
-      #pushed_at   = db.DateTimeProperty()
-      #created_at  = db.DateTimeProperty()
-      #watchers    = db.IntegerProperty()
-      #forks       = db.IntegerProperty()
+        #repo.description = r.description
+        #open_issues = db.BooleanProperty()
+        #has_issues  = db.BooleanProperty()
+        #pushed_at   = db.DateTimeProperty()
+        #created_at  = db.DateTimeProperty()
+        #watchers    = db.IntegerProperty()
+        #forks       = db.IntegerProperty()
 
-    logging.info("I am in the tasks /get_github_info_for_user with user:" + profile.nh_user) 
+      logging.info("I am in the tasks /get_github_info_for_user with user:" + profile.github_user) 
+    except urllib2.HTTPError:
+      logging.error("Failed to get github user: " + profile.github_user)
 
 class MainHandler(webapp.RequestHandler):
   def get(self):
